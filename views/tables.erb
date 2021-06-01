@@ -1,0 +1,33 @@
+<div class="mb-3">
+<h3>Ваша Таблица:</h3>
+<p>Время между машинами: <%=@otvet%> минут,  Время на круг: <%=  @mashins.to_i * @otvet.to_i %> мин</p>
+</div>
+
+<% j=1 %>
+
+<table class="table table-striped">
+
+	<% loop do %>
+
+		<tr>
+			<th scope="row"><%= j %></th>
+			<% @mashins.to_i.times do %>
+				<% @t0_str = t_str @t0 %>
+			    <% @t1_str = t_str @t1 %>
+			    <td> 
+			    	<% if @t0 < @t3 %>
+				        <%= @t0_str %> <br/>
+				        <i>  <%= @t1_str %> </i>
+				    <% end %>
+			    </td>
+			    <% @t0 = @t0 + @otvet.to_i * 60 %>
+				<% @t1 = @t1 + @otvet.to_i * 60 %>
+				
+			<% end %>
+
+		</tr>
+		<% break if @t0 > @t3 %>
+		<% j += 1 %>
+	<% end %>
+
+</table>	
