@@ -8,17 +8,28 @@ def t_str time
 	time.strftime("%H:%M")
 end
 def init_db
-	db = SQLite3::Database.new 'marshruts.db'
-	db.results_as_hash = true
+	@db = SQLite3::Database.new 'marshruts.db'
+	@db.results_as_hash = true
 end
 
 before do
-	init_db
+		init_db
 end
 
-# configure do
-# 	db.execute 'create table  if not exists'
-# end
+configure do
+	 init_db
+	@db.execute 'CREATE TABLE if not exists`Tables` (
+	`id`	INTEGER PRIMARY KEY AUTOINCREMENT,
+	`start`	TEXT,
+	`end`	TEXT,
+	`krug`	INTEGER,
+	`nomer_marshruta`	TEXT,
+	`mashins`	INTEGER,
+	 tp_krug  TEXT,
+	 t_mash   TEXT
+
+)'
+end
 
 
 
@@ -52,6 +63,7 @@ post '/input' do
 	arr2 = @time_posled.split(':')
 	@time_posled_hh =arr2[0].to_i
 	@time_posled_mm = arr2[1].to_i
+	
 
 	hh ={
 		:mashins => 'Введите количество машин!',
@@ -79,6 +91,7 @@ post '/input' do
     @t0 = Time.local(2021,5,1,@time_van_hh,@time_van_mm)
 	@t1 = @t0 + @time_polkruga * 60 + @time_otdih * 60
 	@t3 = Time.local(2021,5,1,@time_posled_hh,@time_posled_mm)
+	@tp_krug = @mashins.to_i * @otvet.to_i
 
 
     

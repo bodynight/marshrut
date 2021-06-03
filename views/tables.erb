@@ -1,6 +1,6 @@
 <div class="mb-3">
 <h3>Маршрут №: <%= @nomer_marshruta %></h3>
-<p>Время между машинами: <%=@otvet%> минут,  Время на круг: <%=  @mashins.to_i * @otvet.to_i %> мин</p>
+<p>Время между машинами: <%=@otvet%> минут,  Время на круг: <%=  @tp_krug %> мин</p>
 </div>
 
 <% j=1 %>
@@ -15,9 +15,15 @@
 				<% @t0_str = t_str @t0 %>
 			    <% @t1_str = t_str @t1 %>
 			    <td> 
-			    	<% if @t0 < @t3 %>
+			    	<% if @t0 <= @t3 %>
 				        <%= @t0_str %> <br/>
 				        <i>  <%= @t1_str %> </i>
+
+				        <% @db.execute 'insert into Tables 
+				        ( start, end, krug, nomer_marshruta, mashins, tp_krug, t_mash) 
+				        values (?, ?, ?, ?, ?, ?, ? )',
+				         [@t0_str,@t1_str,j,@nomer_marshruta,@mashins.to_i,@tp_krug,@otvet] %>
+
 				    <% end %>
 			    </td>
 			    <% @t0 = @t0 + @otvet.to_i * 60 %>
