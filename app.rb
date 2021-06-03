@@ -2,10 +2,24 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
+require 'sqlite3'
 
 def t_str time
 	time.strftime("%H:%M")
 end
+def init_db
+	db = SQLite3::Database.new 'marshruts.db'
+	db.results_as_hash = true
+end
+
+before do
+	init_db
+end
+
+# configure do
+# 	db.execute 'create table  if not exists'
+# end
+
 
 
 get '/' do
@@ -24,6 +38,8 @@ post '/input' do
 
 	@mashins = params[:mashins]
 	@time_krug = params[:time_krug]
+	@nomer_marshruta = params[:nomer_marshruta]
+	@time_otdih = params[:time_otdih].to_i
 
 	@time_polkruga = @time_krug.to_i / 2
 
@@ -41,12 +57,14 @@ post '/input' do
 		:mashins => 'Введите количество машин!',
 		:time_krug => 'Введите время круга!',
 		:time_van => 'Введите время первой машины!',
-		:time_posled => 'Введите время последней машины'
+		:time_posled => 'Введите время последней машины',
+		:nomer_marshruta =>'Введите номер маршрута',
+		:time_otdih => 'Введите время на отдых'
     	}
 
     @error = hh.select{|key,value|  params[key] == ''}.values.join(', ')
 
-    if @mashins.to_i > 20 || @time_krug.to_i > 300 
+    if @mashins.to_i > 20 || @time_krug.to_i > 300 || @time_otdih > 60
     	@error = 'Нее чет не так! Чегото много!!!'
     end	
 
@@ -59,8 +77,10 @@ post '/input' do
     @otvet = params[:otvet]
 
     @t0 = Time.local(2021,5,1,@time_van_hh,@time_van_mm)
-	@t1 = @t0 + @time_polkruga * 60
+	@t1 = @t0 + @time_polkruga * 60 + @time_otdih * 60
 	@t3 = Time.local(2021,5,1,@time_posled_hh,@time_posled_mm)
+
+
     
 	
 	if @otvet != ""

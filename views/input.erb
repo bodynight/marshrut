@@ -1,6 +1,11 @@
 <h2>Страница ввода данных</h2>
 
 <form action="/input" method="POST">
+		<div class="mb-3">
+	    <label for="input masins" class="form-label">Введите номер маршрута</label>
+	    <input type="text" name="nomer_marshruta" class="form-control" value= "<%=@nomer_marshruta%>" placeholder="Введите номер маршрута">
+	  </div>
+
 
 	  <div class="mb-3">
 	    <label for="input masins" class="form-label">Количество машин</label>
@@ -10,6 +15,11 @@
 	  <div class="mb-3">
 	    <label for="input time_krug"  class="form-label">Время полного круга в мин: </label>
 	    <input type="text" name="time_krug" value="<%=@time_krug%>" class="form-control" placeholder="Введите время полного круга в мин:">
+	  </div>
+
+	  <div class="mb-3">
+	    <label for="input time_krug"  class="form-label">Время на отдых в мин: </label>
+	    <input type="text" name="time_otdih" value="<%=@time_otdih%>" class="form-control" placeholder="Введите время на отдых в мин:">
 	  </div>
 
 	  <div class="container" style="margin-top:7px;">
