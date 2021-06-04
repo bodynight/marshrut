@@ -29,6 +29,13 @@ configure do
 	 t_mash   TEXT
 
 )'
+
+@db.execute 'CREATE TABLE if not exists`Selected` (
+	`id`	INTEGER PRIMARY KEY AUTOINCREMENT,
+	`nomer_marshruta`	TEXT,
+	 coment   TEXT
+
+)'
 end
 
 
@@ -93,7 +100,7 @@ post '/input' do
 	@t3 = Time.local(2021,5,1,@time_posled_hh,@time_posled_mm)
 	@tp_krug = @mashins.to_i * @otvet.to_i
 
-
+	$num_marshruta = @nomer_marshruta
     
 	
 	if @otvet != ""
@@ -105,13 +112,33 @@ post '/input' do
 end
 
 get '/tables' do
+
+		
 	if @otvet == nil
 		@error = 'Сначало введите данные:'
 		return erb :input
 	end
-	erb :tables
+
+	return erb :tables
+end
+
+post '/tables' do
+	
+	 @coment = params[:coment] 
+	 @db.execute 'insert into Selected (nomer_marshruta, coment ) values (?, ?)', 
+	[$num_marshruta, @coment]  
+
+	erb :saved_tables
 end
 
 get '/contacts' do
   erb "<h2>Мы лучшие</h2>"
+end
+
+get '/saved_tables' do
+  erb :saved_tables
+end
+
+post '/saved_tables' do
+	erb :saved_tables
 end
