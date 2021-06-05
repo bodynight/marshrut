@@ -100,8 +100,7 @@ post '/input' do
 	@t3 = Time.local(2021,5,1,@time_posled_hh,@time_posled_mm)
 	@tp_krug = @mashins.to_i * @otvet.to_i
 
-	$num_marshruta = @nomer_marshruta
-    
+	    
 	
 	if @otvet != ""
 	 return	erb :tables
@@ -125,10 +124,15 @@ end
 post '/tables' do
 	
 	 @coment = params[:coment] 
-	 @db.execute 'insert into Selected (nomer_marshruta, coment ) values (?, ?)', 
-	[$num_marshruta, @coment]  
 
-	erb :saved_tables
+	 @result = @db.execute 'select * from Tables order by id desc'
+	 @row = @result[0]
+	 @num_marshruta = @row["nomer_marshruta"]
+
+	 @db.execute 'insert into Selected (nomer_marshruta, coment ) values (?, ?)', 
+	[@num_marshruta, @coment]  
+
+	redirect '/saved_tables'
 end
 
 get '/contacts' do
@@ -136,6 +140,10 @@ get '/contacts' do
 end
 
 get '/saved_tables' do
+
+	@sel_table = @db.execute 'select * from Tables where nomer_marshruta=20'
+	@row = @sel_table[0]
+
   erb :saved_tables
 end
 

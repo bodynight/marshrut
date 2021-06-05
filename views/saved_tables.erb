@@ -1,3 +1,33 @@
-<h2>Hello</h2>
 
-<%= $num_marshruta %>
+<h2>Номер маршрута: <%= @row["nomer_marshruta"] %></h2>
+<p>Время между машинами:<%= @row["t_mash"] %> мин, Время полного круга:<%=@row["tp_krug"]%> мин</p>
+
+
+<% j=1 %>
+<% k=0 %>
+<% m=0 %>
+
+
+<table class="table table-striped">
+
+<% @sel_table.each do |row| %>
+
+	<% if row["krug"] > k %>
+	<%= '<tr>' %> <% k +=1 %>
+	<%= '<th scope="row">' %> <%=k%> <%= '</th>' %>
+	<% end %>
+	<% m += 1%>
+	<td>
+	 <%=row["start"]%> <br />
+	 <%=row["end"]%>
+	</td>
+
+	 <% if row["mashins"] == m %>
+	 	<%= '</tr>' %> <% m=0 %>
+	 	<% end %>
+
+
+
+<% end %>
+
+</table>
