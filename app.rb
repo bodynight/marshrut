@@ -140,13 +140,29 @@ get '/contacts' do
 end
 
 get '/saved_tables' do
+	@result_2 = @db.execute 'select * from Tables order by id desc'
+	 @row_2 = @result_2[0]
+	 @nomer_marshruta = @row_2["nomer_marshruta"]
+	 
+	 	
 
-	@sel_table = @db.execute 'select * from Tables where nomer_marshruta=20'
+	@per_tables = @db.execute 'select * from Selected order by nomer_marshruta'
+	@sel_table = @db.execute 'select * from Tables where nomer_marshruta = ? ', [@nomer_marshruta]
 	@row = @sel_table[0]
+	@b_coment = @db.execute 'select * from Selected where nomer_marshruta = ?', [@nomer_marshruta]
+	@coment_row =@b_coment[0]
 
   erb :saved_tables
 end
 
 post '/saved_tables' do
-	erb :saved_tables
+	@nomer_marshruta = params[:ns_marshruta]
+	
+	@per_tables = @db.execute 'select * from Selected order by nomer_marshruta'
+	@sel_table = @db.execute 'select * from Tables where nomer_marshruta = ? ', [@nomer_marshruta]
+	@row = @sel_table[0]
+	@b_coment = @db.execute 'select * from Selected where nomer_marshruta = ?', [@nomer_marshruta]
+	@coment_row =@b_coment[0]
+	 erb :saved_tables
+	
 end

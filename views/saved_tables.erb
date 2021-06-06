@@ -1,7 +1,24 @@
+<form action="/saved_tables" method="POST">
+	
+	<div class="form-group">
+    <label for="exampleFormControlSelect1">Выберите маршрут:</label>
+    <select name="ns_marshruta" class="form-control" id="exampleFormControlSelect1">
+
+      <% @per_tables.each do |rows|	%>
+      
+      	<option <%= @row["nomer_marshruta"] == rows["nomer_marshruta"] ? 'selected' : '' %> > <%=rows["nomer_marshruta"]%></option>
+
+      <% end %>
+      
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Подтверждение выбора</button>
+
+</form>
 
 <h2>Номер маршрута: <%= @row["nomer_marshruta"] %></h2>
-<p>Время между машинами:<%= @row["t_mash"] %> мин, Время полного круга:<%=@row["tp_krug"]%> мин</p>
-
+<p>Время между машинами:<%= @row["t_mash"] %> мин, Время полного круга:<%=@row["tp_krug"]%> мин, Заметка: <%=@coment_row["coment"]%> </p>
 
 <% j=1 %>
 <% k=0 %>
@@ -19,14 +36,12 @@
 	<% m += 1%>
 	<td>
 	 <%=row["start"]%> <br />
-	 <%=row["end"]%>
+	 <i><%=row["end"]%></i>
 	</td>
 
 	 <% if row["mashins"] == m %>
 	 	<%= '</tr>' %> <% m=0 %>
 	 	<% end %>
-
-
 
 <% end %>
 
