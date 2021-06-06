@@ -1,6 +1,13 @@
 <h2>Страница ввода данных</h2>
 
+
 <form action="/input" method="POST">
+
+		<% if @sovpad %>
+				<%= '<button name="delit" type="submit" value="ok" class="btn btn-danger">Удалить маршрут</button>' %>
+		<% end %>
+
+
 		<div class="mb-3">
 	    <label for="input masins" class="form-label">Введите номер маршрута</label>
 	    <input type="text" name="nomer_marshruta" class="form-control" value= "<%=@nomer_marshruta%>" placeholder="Введите номер маршрута">
@@ -59,7 +66,7 @@
       </div>
 	  
 
-	  <button type="submit" class="btn btn-primary">Submit</button>
+	  <button type="submit" class="btn btn-primary">Расчитать промежуток</button>
 
 
 

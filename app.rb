@@ -53,7 +53,7 @@ end
 
 post '/input' do
 
-
+	
 	@mashins = params[:mashins]
 	@time_krug = params[:time_krug]
 	@nomer_marshruta = params[:nomer_marshruta]
@@ -82,6 +82,27 @@ post '/input' do
     	}
 
     @error = hh.select{|key,value|  params[key] == ''}.values.join(', ')
+
+     @sel = @db.execute 'select * from Selected'
+
+     
+     	
+     
+     	
+     @sel.each do |rows|
+     	if rows["nomer_marshruta"] == @nomer_marshruta
+     		@error = 'Такой маршрут существует. Удалите или переименуйте маршрут '
+     		@sovpad = 'sovpad'
+     	end
+     end
+
+     @del = params[:delit]
+	if @del == 'ok'
+		@db.execute 'DELETE FROM Tables WHERE nomer_marshruta = ?', [@nomer_marshruta,]
+		@db.execute 'DELETE FROM Selected WHERE nomer_marshruta = ?', [@nomer_marshruta,]
+		redirect '/input'
+	end
+
 
     if @mashins.to_i > 20 || @time_krug.to_i > 300 || @time_otdih > 60
     	@error = 'Нее чет не так! Чегото много!!!'
