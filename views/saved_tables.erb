@@ -23,10 +23,20 @@
 <% j=1 %>
 <% k=0 %>
 <% m=0 %>
+<% @mash = @sel_table[0] %>
+<% mash_num = @mash['mashins'] %>
 
 
-<table class="table table-striped">
-
+<table class="table table-striped table-bordered">
+	<thead>
+    <tr>
+    	<th scope="col">#</th>
+    	<% 1.upto(mash_num) do |i| %>
+      		<th scope="col" style="text-align: center;"> <%= i %> </th>
+      	<% end %>
+    </tr>
+  </thead>
+  <tbody>
 <% @sel_table.each do |row| %>
 
 	<% if row["krug"] > k %>
@@ -34,7 +44,7 @@
 	<%= '<th scope="row">' %> <%=k%> <%= '</th>' %>
 	<% end %>
 	<% m += 1%>
-	<td>
+	<td style="text-align: center;">
 	 <b><%=row["start"]%></b> <br />
 	 <i><%=row["end"]%></i>
 	</td>
@@ -44,5 +54,5 @@
 	 	<% end %>
 
 <% end %>
-
+</tbody>
 </table>

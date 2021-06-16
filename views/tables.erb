@@ -5,8 +5,17 @@
 
 <% j=1 %>
 
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
 
+		<thead>
+		    <tr>
+		    	<th scope="col">#</th>
+		    	<% 1.upto(@mashins.to_i) do |i| %>
+		      		<th scope="col" style="text-align: center;"> <%= i %> </th>
+		      	<% end %>
+		    </tr>
+		</thead>	
+		<tbody>
 	<% loop do %>
 
 		<tr>
@@ -14,7 +23,7 @@
 			<% @mashins.to_i.times do %>
 				<% @t0_str = t_str @t0 %>
 			    <% @t1_str = t_str @t1 %>
-			    <td> 
+			    <td style="text-align: center;"> 
 			    	<% if @t0 <= @t3 %>
 				        <b><%= @t0_str %></b> <br/>
 				        <i>  <%= @t1_str %> </i>
@@ -35,7 +44,7 @@
 		<% break if @t0 > @t3 %>
 		<% j += 1 %>
 	<% end %>
-
+	</tbody>
 </table>
 <br />
 
