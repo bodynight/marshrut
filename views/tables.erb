@@ -16,7 +16,7 @@
 			    <% @t1_str = t_str @t1 %>
 			    <td> 
 			    	<% if @t0 <= @t3 %>
-				        <%= @t0_str %> <br/>
+				        <b><%= @t0_str %></b> <br/>
 				        <i>  <%= @t1_str %> </i>
 
 				        <% @db.execute 'insert into Tables 
