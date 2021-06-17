@@ -154,7 +154,7 @@ post '/tables' do
 end
 
 get '/contacts' do
-  erb "<h2>Мы лучшие</h2>"
+  erb :contacts 
 end
 
 get '/saved_tables' do
