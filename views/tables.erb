@@ -21,9 +21,12 @@
 		<tr>
 			<th scope="row"><%= j %></th>
 			<% @mashins.to_i.times do %>
+
 				<% @t0_str = t_str @t0 %>
 			    <% @t1_str = t_str @t1 %>
+
 			    <td style="text-align: center;"> 
+
 			    	<% if @t0 <= @t3 %>
 				        <b><%= @t0_str %></b> <br/>
 				        <i>  <%= @t1_str %> </i>
@@ -35,10 +38,19 @@
 
 				    <% end %>
 			    </td>
+
 			    <% @t0 = @t0 + @otvet.to_i * 60 %>
 				<% @t1 = @t1 + @otvet.to_i * 60 %>
-				
+				 <% if (@t0 - @t3).abs < @otvet.to_i * 30 %>
+			    		<% @t0 = @t3 %>
+			    		<% @t1 = @t0 + @time_polkruga * 60 + @time_otdih * 60 %>
+			    <% end %>
+
 			<% end %>
+
+			 <% if (@t3 -@t0) / (@otvet.to_i * 60) / (2 * @mashins.to_i) < 0.75 &&  (@t3 - @t0) / (@otvet.to_i * 60) / (2 * @mashins.to_i) > 0.5 %>
+				     <%= "Opachki" %>
+			 <% end %>
 
 		</tr>
 		<% break if @t0 > @t3 %>
