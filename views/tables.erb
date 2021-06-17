@@ -49,7 +49,7 @@
 			<% end %>
 
 			 <% if (@t3 -@t0) / (@otvet.to_i * 60) / (2 * @mashins.to_i) < 0.69 &&  (@t3 - @t0) / (@otvet.to_i * 60) / (2 * @mashins.to_i) > 0.5 %>
-				     <%= "Opachki" %>
+				     <%= "Корекция в последней строке" %>
 				     <% @otvet = (@t3 - @t0) / 60 / (@mashins.to_i - 1) %>
 				     <% @otvet = @otvet.to_s %>
 			 <% end %>
